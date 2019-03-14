@@ -8,47 +8,59 @@ db = client_conn["mysinoptik"]
 coll_1 = db["weather"]
 coll_2 = db["seismicity"]
 
-"""making list of values for weather"""
-"""making city list"""
-city_list = []
-for x in list(coll_1.find({},{"_id":0,"temperature":0,"wind_speed":0,"humidity":0,"date":0})):
-    while x not in city_list:
-        city_list.append(x)
-print(city_list)
+def handler(req):
+    if req == "initial request":
+        """making list of values for weather"""
+        """making city list"""
 
-"""making temp list"""
-temp_list = []
-for x in coll_1.find({},{"_id":0,"city":0,"wind_speed":0,"humidity":0,"date":0}):
-    while x not in temp_list:
-        temp_list.append(x)
-print(temp_list)
 
-"""making wind speed list"""
-wind_list = []
-for x in coll_1.find({},{"_id":0,"city":0,"temperature":0,"humidity":0,"date":0}):
-    while x not in wind_list:
-        wind_list.append(x)
-print(wind_list)
+        x = ['Chernihiv', 'Kyiv']
+        return x
 
-"""making humidity list"""
-hum_list = []
-for x in coll_1.find({},{"_id":0,"city":0,"temperature":0,"wind_speed":0,"date":0}):
-    while x not in hum_list:
-        hum_list.append(x)
-print(hum_list)
+        # return list(coll_1.distinct("city"))
+        # print(city)
 
-"""making date list"""
-
-# Traceback (most recent call last):
-#   File "mongo.py", line 15, in <module>
-#     for x in coll_1.find({},{"_id":0,"temperature":0,"wind_speed":0,"humidity":0,"date":0}).items():
-# AttributeError: 'Cursor' object has no attribute 'items'
-
-# def handler(req):
-#     if req == "initial request":
+        """making temp list"""
+        temp = list(coll_1.distinct("temperature"))
+        print(temp)
 #
-#     else:
+        """making wind speed list"""
+        wind = list(coll_1.distinct("wind_speed"))
+        print(wind)
 
+        """making humidity list"""
+        hum = list(coll_1.distinct("humidity"))
+        print(humidity)
+
+
+        """making date list"""
+
+    else:
+        print("Here's new request")
+
+#cursor
+#
+# """making city list"""
+# city = list(coll_1.distinct("city"))
+# print(city)
+#
+# """making temp list"""
+# temp = list(coll_1.distinct("temperature"))
+# print(temp)
+# #
+# """making wind speed list"""
+# wind = list(coll_1.distinct("wind_speed"))
+# print(wind)
+#
+# """making humidity list"""
+# hum = list(coll_1.distinct("humidity"))
+# print(hum)
+# """making date list"""
+# city_list = []
+# result = []
+# for x in coll_1.find({"city": { "$nin": []}},{"_id":0,"city":1}):
+#     result.append(x)
+# print(result)
 
 # print(coll_1)
 # print(db.list_collection_names())
@@ -57,8 +69,3 @@ print(hum_list)
 
 # cursor = db.weather.find("city:Kyiv")
 # print(cursor)
-
-
-# print(client_conn.list_database_names())
-# if "mysinoptik" in client_conn.list_database_names():
-#     print("Eve is ok")
