@@ -1,5 +1,7 @@
 import pymongo
 import json
+import re
+
 
 """access to database"""
 client_conn = pymongo.MongoClient('127.0.0.1', 27017)
@@ -34,15 +36,20 @@ def handler(req):
 
 
         """making date list"""
+        date_regex = re.compile(r'\d{4}-\d{2}-\d{2}')
+        mo = date_regex.search(list(coll_1.distinct("date")))
+        mo.group()
 
     else:
         print("Here's new request")
 
+handler(1)
+
 #cursor
 #
-# """making city list"""
-# city = list(coll_1.distinct("city"))
-# print(city)
+"""making city list"""
+city = list(coll_1.distinct("city"))
+print(city)
 #
 # """making temp list"""
 # temp = list(coll_1.distinct("temperature"))
@@ -55,7 +62,9 @@ def handler(req):
 # """making humidity list"""
 # hum = list(coll_1.distinct("humidity"))
 # print(hum)
-# """making date list"""
+"""making date list"""
+date = list(coll_1.distinct("date"))
+print(date)
 # city_list = []
 # result = []
 # for x in coll_1.find({"city": { "$nin": []}},{"_id":0,"city":1}):
